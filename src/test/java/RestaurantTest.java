@@ -5,6 +5,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,7 +68,6 @@ class RestaurantTest {
     @Test
     public void removing_item_from_menu_should_decrease_menu_size_by_1() throws ItemNotFoundException {
 
-        restaurant = new Restaurant("Amelie's cafe", "Chennai", openingTime, closingTime);
         restaurant.addToMenu("Sweet corn soup", 119);
         restaurant.addToMenu("Vegetable lasagne", 269);
 
@@ -78,7 +79,6 @@ class RestaurantTest {
     @Test
     public void removing_item_that_does_not_exist_should_throw_exception() {
 
-        restaurant = new Restaurant("Amelie's cafe", "Chennai", openingTime, closingTime);
         restaurant.addToMenu("Sweet corn soup", 119);
         restaurant.addToMenu("Vegetable lasagne", 269);
 
@@ -86,4 +86,16 @@ class RestaurantTest {
                 () -> restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    @Test
+    public void get_order_value_for_the_selected_items() {
+
+        restaurant.addToMenu("Sweet corn soup", 119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
+        restaurant.addToMenu("coffee", 20);
+
+        List<String> orderedItems = Arrays.asList("Sweet corn soup", "Vegetable lasagne", "coffee");
+
+        assertEquals(restaurant.getOrderValue(orderedItems), 408);
+    }
 }
